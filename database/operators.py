@@ -23,12 +23,18 @@ def create_table(conn, create_table_sql):
 
 def insert_supervisor(conn, name='amini', university='sharif', email='a@s.com', country='Iran', rank=None, webpage=None, position_type=None):
     cursor = conn.cursor()
-    rows = [(name, university, email, country, webpage, position_type, rank)]
-    cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?)', rows)
-    conn.commit()
-    existence_bool = utils.check_existence_university_in_universities(conn, name)
-    if not existence_bool:
-        insert_university(conn, university, country, rank=None)
+    existence_bool_supervisor = utils.check_existence_supervisor_in_supervisors(conn, email)
+    if not existence_bool_supervisor:
+        rows = [(name, university, email, country, webpage, position_type, rank)]
+        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?)', rows)
+        conn.commit()
+        existence_bool_university = utils.check_existence_university_in_universities(conn, name)
+        if not existence_bool_university:
+            insert_university(conn, university, country, rank=None)
+        success_bool = 1
+    else:
+        success_bool = 0
+    return success_bool
 
 def insert_university(conn, name='sharif', country=None, rank=None):
     cursor = conn.cursor()

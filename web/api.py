@@ -1,3 +1,4 @@
+from email import message
 import errno
 import sys
 sys.path.append('../database')
@@ -61,12 +62,17 @@ class WebApp():
                     flask.flash('Please Fill all the Forms')
                     return flask.redirect(flask.url_for('insert_supervisor'))
 
-                operators.insert_supervisor(self.db_configs.conn, name, university, email, country, webpage=webpage, position_type=position_type, rank=university_rank)
+                success_bool = operators.insert_supervisor(self.db_configs.conn, name, university, email, country, webpage=webpage, position_type=position_type, rank=university_rank)
 
-                flask.flash('Supervisor is added successfully')
-                print('Supervisor is added successfully')
+                if success_bool:
+                    message = 'Supervisor is added successfully'
+                else:
+                    message = 'Supervisor already exists'
+
+                flask.flash(message)
+                print(message)
                 return flask.redirect(flask.url_for('index'))
 
-        
+
         t = Thread(target=self.app.run, args=(self.ip,self.port,False))
         t.start()

@@ -1,0 +1,273 @@
+h1 {
+    color: black;
+    text-align: center;
+    padding: 2rem;
+}
+
+div.CardMain {
+    
+    box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.2);
+    transition: 0.3s;
+
+}
+
+div.CardMain:hover {
+
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+h4.CardMain {
+    color: black;
+    transition: 0.3s;
+}
+
+h4.CardMain:hover ,a:hover {
+
+    color: #007bff;
+    text-decoration: none!important;
+
+}
+
+p.postpage{
+    margin-top: 2rem;
+    margin-bottom: 2re;
+}
+span.postpage {
+    font-weight: bold;
+}
+
+h2.postpage{
+    margin-top: 2rem;
+    margin-bottom: 2re;
+}
+
+
+div.PanelLogin{
+    padding: 2rem;
+    
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.2);
+    transition: 0.3s;
+    
+}
+
+div.uploadrows{
+    margin:1rem;
+}
+
+div.PanelLoginrows{
+    margin:1rem;
+}
+
+div.addpage{
+    padding: 2rem;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 3px 0px rgb(0, 0, 0, 0.2);
+    transition: 0.3s;
+    
+}
+
+div.addpage:hover{
+
+    padding: 2rem;
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.2);
+    
+}
+
+
+
+div.SearchBarBody{
+    margin-bottom: 5rem;
+}
+
+div.SearchBarMain{
+    width : 100%;
+    border: 0px solid rgba(0,0,0,.15)!important;
+}
+
+div.SearchBarMainBox{
+    width : 100%;
+    border: 0px solid rgba(0,0,0,.15)!important;
+    padding: .0rem 0!important;
+    transition: 0.3s;
+}
+
+div.SearchBarMainBox:focus{
+    box-shadow: 0px 0px 15px 4px rgba(0, 0, 0, 0.3);
+}
+
+input.SearchBarBox{
+    width: 100%!important;
+    border: 1px solid rgba(0,0,0,.35)!important;
+    border-radius: .25rem 0.25rem 0 0!important;
+    background-color: rgb(235, 235, 235);
+    transition: 0.3s;
+}
+
+input.SearchBarBox:focus{
+    outline: none;
+}
+
+input.SearchBarBox:focus .div.SearchBarBox{
+    display: none!important;
+}
+
+
+
+
+div.SearchBarBox{
+    width : 100%!important;
+    display: block;
+    background-color: rgb(235, 235, 235);
+    /* border: 1px solid rgba(0,0,0,.35)!important;
+    border-radius: .25rem!important; */
+}
+
+a.search {
+    color: #505050;
+}
+
+
+div.PanelLogin{
+
+    max-width: 100%!important;
+}
+
+
+
+
+comments-details button.btn.dropdown-toggle,
+.comments-details .total-comments {
+    font-size: 18px;
+    font-weight: 500;
+    color: #5e5e5e;
+}
+.comments-details {
+    padding: 15px 15px;
+}
+.comments .comments .dropdown,
+.comments .dropup {
+    position: relative;
+}
+.comments button {
+    background-color: transparent;
+    border: none;
+}
+.comments .comment-box {
+    width: 100%;
+    float: left;
+    height: 100%;
+    padding-top: 2rem;
+    background-color: #FAFAFA;
+    padding: 2rem 10px 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+.comments .add-comment {
+    background-color: transparent;
+    border: none;
+    position: relative;
+    margin-bottom: 50px;
+}
+.comments .commenter-pic {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    border-radius: 100%;
+    border: 2px solid #fff;
+    overflow: hidden;
+    background-color: #fff;
+}
+.comments .add-comment .commenter-name {
+    width: 100%;
+    padding-left: 75px;
+    position: absolute;
+    top: 20px;
+    left: 0px;
+}
+.comments .add-comment input {
+    border-top: 0px;
+    border-bottom: 1px solid #ccc;
+    border-left: 0px;
+    border-right: 0px;
+    outline: 0px;
+    box-shadow: none;
+    border-radius: 0;
+    width: 100%;
+    padding: 0;
+    font-weight: normal;
+}
+.comments .add-comment input:focus {
+    border-color: #03a9f4;
+    border-width: 2px;
+}
+.comments .add-comment button[type=submit] {
+    background-color: #03a9f4;
+    color: #fff;
+    margin-right: 0px;
+}
+.comments .add-comment button {
+    background-color: #f5f5f5;
+    margin: 10px 5px;
+    font-size: 14px;
+    text-transform: uppercase;
+    float: right;
+}
+.comments .commenter-name .comment-time {
+    font-weight: normal;
+    margin-left: 8px;
+    font-size: 15px;
+}
+.comments p.comment-txt {
+    font-size: 15px;
+    border-bottom: 1px solid #ddd;
+    padding: 0px 0px 15px;
+}
+.comments .commenter-name {
+    display: inline-block;
+    position: relative;
+    top: -20px;
+    left: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.comments .comment-meta {
+    font-size: 14px;
+    color: #333;
+    padding: 2px 5px 0px;
+    line-height: 20px;
+    float: right;
+}
+.comments .reply-box {
+    display: none;
+}
+.comments .replied {
+    background-color: #fff;
+    width: 95%;
+    float: right;
+    margin-top: 15px;
+}
+
+/*======Responsive CSS=======*/
+@media (max-width: 767px){
+.comments .commenter-name {
+    font-size: 13px;
+    top: -5px;
+}
+.comments .commenter-pic {
+    width: 40px;
+    height: 40px;
+}
+.comments .commenter-name a{
+  display: block;
+}
+.comments .commenter-name .comment-time{
+  display: block;
+  margin-left: 0px;
+}
+}
