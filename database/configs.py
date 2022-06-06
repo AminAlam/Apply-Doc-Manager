@@ -14,9 +14,13 @@ class database_configs():
                                         university text NOT NULL,
                                         email text NOT NULL,
                                         country text NOT NULL,
+                                        emailed text NOT NULL,
+                                        answer text NOT NULL,
+                                        interview text NOT NULL,
+                                        position_type text NOT NULL,
                                         webpage text,
-                                        position_type text,
-                                        university_rank integer
+                                        university_rank integer,
+                                        notes text
                                     ); """
     def make_conn(self):
         self.conn = operators.create_connection(self.dbName)

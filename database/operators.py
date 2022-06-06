@@ -21,14 +21,14 @@ def create_table(conn, create_table_sql):
     except Error as e:
         print(e)
 
-def insert_supervisor(conn, name='amini', university='sharif', email='a@s.com', country='Iran', rank=None, webpage=None, position_type=None):
+def insert_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, rank=None, webpage=None):
     cursor = conn.cursor()
     existence_bool_supervisor = utils.check_existence_supervisor_in_supervisors(conn, email)
     if not existence_bool_supervisor:
-        rows = [(name, university, email, country, webpage, position_type, rank)]
-        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?)', rows)
+        rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes)]
+        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?,?,?,?,?)', rows)
         conn.commit()
-        existence_bool_university = utils.check_existence_university_in_universities(conn, name)
+        existence_bool_university = utils.check_existence_university_in_universities(conn, university)
         if not existence_bool_university:
             insert_university(conn, university, country, rank=None)
         success_bool = 1

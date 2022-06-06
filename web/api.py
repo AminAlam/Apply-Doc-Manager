@@ -54,6 +54,10 @@ class WebApp():
                     webpage = flask.request.form['webpage']
                     position_type = flask.request.form['position_type']
                     university_rank = flask.request.form['university_rank']
+                    emailed = flask.request.form['emailed']
+                    answer = flask.request.form['answer']
+                    interview = flask.request.form['interview']
+                    notes = flask.request.form['notes']
                 except:
                     flask.flash('Please Fill all the Forms')
                     return flask.redirect(flask.url_for('insert_supervisor'))
@@ -61,8 +65,9 @@ class WebApp():
                 if name == '' or university == '' or email == '' or country == '':
                     flask.flash('Please Fill all the Forms')
                     return flask.redirect(flask.url_for('insert_supervisor'))
-
-                success_bool = operators.insert_supervisor(self.db_configs.conn, name, university, email, country, webpage=webpage, position_type=position_type, rank=university_rank)
+                success_bool = operators.insert_supervisor(self.db_configs.conn, name, university, email, country,
+                                webpage=webpage, position_type=position_type, rank=university_rank, 
+                                emailed=emailed, answer=answer, interview=interview, notes=notes)
 
                 if success_bool:
                     message = 'Supervisor is added successfully'
