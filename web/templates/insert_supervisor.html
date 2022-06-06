@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <title>Add Supervisor</title>
+ <h1>Add New Supervisor</h1>
+ <div class="container border rounded addpage">
+ <form action="/insert_supervisor_to_db" method=post enctype=multipart/form-data>
+    <div class="form-row uploadrows">
+        <div class="form-group col-md-6">
+            <label for="name">Name*</label>
+            <input class="form-control" name="name"> 
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="university">University*</label>
+            <input class="form-control" name="university"> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="email">Email*</label>
+          <input class="form-control" name="email"> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="country">Country*</label>
+          <input class="form-control" name="country"> 
+        </div>
+
+
+        <div class="form-group col-md-6">
+          <label for="webpage">Webpage</label>
+          <input class="form-control" name="webpage"> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="position_type">Position type</label>
+          <input class="form-control" name="position_type"> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="university_rank">University Rank</label>
+          <input class="form-control" name="university_rank"> 
+        </div>
+        
+    </div>    
+
+
+  
+</div>
+<div class="input-group mb-3 row">
+
+  <div class="col-md-4">
+    <button class="btn btn-primary" type=submit Course> Submit</button>
+  </div>
+
+</div>
+</div>
+
+
+
+
+ </form>
+</div>
+
+
+ 
+ {% endblock %}
