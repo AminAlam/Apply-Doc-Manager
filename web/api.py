@@ -9,12 +9,13 @@ class WebApp():
         self.app = flask.Flask(__name__, static_folder=static_folder)
 
     def run(self):    
-        app = self.app        
+        app = self.app
         @app.route('/')
         def index():
-            cursor = self.db_configs.conn.cursor(buffered=True)
-            cursor.execute('SELECT * FROM universities')
+            cursor = self.db_configs.conn.cursor()
+            cursor.execute('SELECT * FROM supervisors')
             universities = cursor.fetchall()
+            print(universities)
             return flask.render_template('index.html', posts=universities)
 
         

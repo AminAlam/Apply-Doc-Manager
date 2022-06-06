@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{% block title %} Datas {% endblock %}</h1> 
+
+    <div class="card-deck">
+    
+    {% for post in posts %}
+        <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em; width: 100%;">
+            <div class="CardMain card ">
+                    <h3> {{ post[1] }}</h4>
+                    <h5> Number of Subjects: {{post[2]}}</h6>
+                    <h6> Added at: {{post[3]}}</h6>
+                </a>
+            </div>
+        </div>
+        <hr>
+        
+    {% endfor %}
+    
+    </div>
+</div>
+{% endblock %}
