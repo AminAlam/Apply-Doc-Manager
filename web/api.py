@@ -29,6 +29,10 @@ class WebApp():
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM universities')
             universities = cursor.fetchall()
+            for university_no in range(0,len(universities)):
+                cursor.execute("SELECT rowid FROM supervisors WHERE university = ?", (universities[university_no][0],))
+                num_supervisors = len(cursor.fetchall())
+                universities[university_no] = universities[university_no]+(num_supervisors, )
             return flask.render_template('universities.html', posts=universities)
 
         @app.route('/supervisors')
