@@ -1,15 +1,18 @@
+import sys
+sys.path.append('../utils')
+
+import utils
 import sqlite3
 from sqlite3 import Error
 
 def create_connection(db_file):
     conn = None
     try:
-        conn = sqlite3.connect(db_file)
+        conn = sqlite3.connect(db_file, check_same_thread=False)
         print('Connected to database using SQLite', sqlite3.version)
     except Error as e:
         print(e)
     return conn
-
 
 def create_table(conn, create_table_sql):
     try:
@@ -17,3 +20,18 @@ def create_table(conn, create_table_sql):
         c.execute(create_table_sql)
     except Error as e:
         print(e)
+
+def insert_supervisor(conn, name='amini', university='sharif', email='a@s.com', country='Iran', rank=None, webpage=None, position_type=None):
+    cursor = conn.cursor()
+    rows = [(name, university, email, country, webpage, position_type, rank)]
+    cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?)', rows)
+    conn.commit()
+    existence_bool = utils.check_existence_university_in_universities(conn, name)
+    if not existence_bool:
+        insert_university(conn, university, country, rank=None)
+
+def insert_university(conn, name='sharif', country=None, rank=None):
+    cursor = conn.cursor()
+    rows = [(name, country, rank)]
+    cursor.executemany('insert into universities values (?, ?, ?)', rows)
+    conn.commit()

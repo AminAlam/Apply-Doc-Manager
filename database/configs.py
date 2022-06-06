@@ -13,8 +13,10 @@ class database_configs():
                                         name text NOT NULL,
                                         university text NOT NULL,
                                         email text NOT NULL,
+                                        country text NOT NULL,
                                         webpage text,
-                                        position_type text
+                                        position_type text,
+                                        university_rank integer
                                     ); """
     def make_conn(self):
         self.conn = operators.create_connection(self.dbName)
