@@ -2,6 +2,9 @@ from email import message
 import errno
 import sys
 sys.path.append('../database')
+sys.path.append('../utils')
+
+import utils
 import operators
 import flask
 from threading import Thread
@@ -26,7 +29,9 @@ class WebApp():
             cursor.execute('SELECT * FROM supervisors')
             supervisors = cursor.fetchall()
 
-            return flask.render_template('index.html', posts=[universities, supervisors])
+            info = utils.info(supervisors, universities)
+
+            return flask.render_template('index.html', post=info)
 
         @app.route('/universities')
         def universities():

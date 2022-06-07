@@ -43,3 +43,41 @@ def check_existence_supervisor_in_supervisors(conn, email):
         print('Supervisors with email %s found with rowids %s'%(email,','.join(map(str, next(zip(*data))))))
         existence_bool = 1
     return existence_bool
+
+
+def info(supervisors, universities):
+    num_of_supervisors = len(supervisors)
+    num_of_universities = len(universities)
+    num_email_sent = 0
+    num_good_answers = 0
+    num_bad_answers = 0
+    num_scheduled_interviews = 0
+    num_bad_interviews = 0
+    num_good_interviews = 0
+    num_msc_positions = 0
+    num_phd_positions = 0
+
+    for supervisor in supervisors:
+        if supervisor[4] == 'Yes':
+            num_email_sent += 1
+        if supervisor[5] == 'Good':
+            num_good_answers += 1
+        elif supervisor[5] == 'Bad':
+            num_bad_answers += 1
+        
+        if supervisor[6] == 'Scheduled':
+            num_scheduled_interviews += 1
+        elif supervisor[6] == 'Bad':
+            num_bad_interviews += 1
+        elif supervisor[6] == 'Good':
+            num_good_interviews += 1
+
+        if supervisor[7] == 'MSc':
+            num_msc_positions = num_msc_positions + 1
+        elif supervisor[7] == 'PHD':
+            num_phd_positions = num_phd_positions + 1
+
+    return [num_of_supervisors, num_of_universities, num_email_sent, 
+            num_good_answers, num_bad_answers, num_scheduled_interviews, 
+            num_bad_interviews, num_good_interviews, num_msc_positions, 
+            num_phd_positions]

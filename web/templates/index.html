@@ -2,151 +2,41 @@
 
 {% block content %}
 <div class="container">
-    <h1>{% block title %} Home {% endblock %}</h1> 
-
-
-        <div class="card-deck">
-            <div id="carouselSupervisor" class="carousel slide d-none d-sm-none d-md-block" data-ride="carousel">
-                <div class="carousel-inner">
-                        {% for supervisor_no in range(0, posts[1]|length) %}
-
-                        {% if supervisor_no%3==0 %}
-
-                            {% if supervisor_no==0 %}
-                                <div class="carousel-item active">
-                            {% else %}
-                                <div class="carousel-item">
-                            {% endif%}
-                            <div class="row">
-                        {% endif%}
-                            <div class="col">
-                                
-                                <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
-                                    <div class="CardMain card text-center" style="width: 18rem;">
-                                        <a href="{{ url_for('supervisor', id=posts[1][supervisor_no][11]) }}">
-                                            <h4 class="CardMain">{{posts[1][supervisor_no][0]}}</h4>
-                                        </a>
-                                            <h5 class="CardMain">{{ posts[1][supervisor_no][1] }} - {{ posts[1][supervisor_no][3] }}</h5>
-                                            <h6 class="CardMain">{{ posts[1][supervisor_no][2] }}</h6>
-                                        <div class="card-footer" style="width: 18rem;">
-                                            {% if posts[1][supervisor_no][4]=="No" %}
-                                                <span class="badge badge-danger" >emailed: {{ posts[1][supervisor_no][4] }}</span>
-                                            {% else %}
-                                                <span class="badge badge-success" >emailed: {{ posts[1][supervisor_no][4] }}</span>
-                                            {% endif %}
-                            
-                                            {% if posts[1][supervisor_no][5]=="Not Yet" %}
-                                                <span class="badge badge-secondary" >answered: {{ posts[1][supervisor_no][5] }}</span>
-                                            {% elif posts[1][supervisor_no][5]=="Bad"  %}
-                                                <span class="badge badge-danger" >answered: {{ posts[1][supervisor_no][5] }}</span>
-                                            {% elif posts[1][supervisor_no][5]=="Good"  %}
-                                                <span class="badge badge-success" >answered: {{ posts[1][supervisor_no][5] }}</span>
-                                            {% endif %}
-                            
-                                            {% if posts[1][supervisor_no][6]=="Not Yet" %}
-                                                <span class="badge badge-secondary" >interview: {{ posts[1][supervisor_no][6] }}</span>
-                                            {% elif posts[1][supervisor_no][6]=="Scheduled"  %}
-                                                <span class="badge badge-info" >interview: {{ posts[1][supervisor_no][6] }}</span>
-                                            {% elif posts[1][supervisor_no][6]=="Bad"  %}
-                                                <span class="badge badge-danger" >interview: {{ posts[1][supervisor_no][6] }}</span>
-                                            {% elif posts[1][supervisor_no][6]=="Good"  %}
-                                                <span class="badge badge-success" >interview: {{ posts[1][supervisor_no][6] }}</span>
-                                            {% endif %}
-                                            <span class="badge badge-dark">Type: {{ posts[1][supervisor_no][7] }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        {% if supervisor_no%4==2 %}
-                            </div>
-                        </div>
-                        {% endif%}
-                        {% endfor %}
-                        
-
-                    </div>
-
+    
+    <div class="card-deck">
+        <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
+            <div class="CardMain card text-center" style="width: 18rem;padding-top: 1rem;">
+                    <h4 class="CardMain">{{post[0]}} Supervisor</h4>
+                    <h5 class="CardMain">From {{post[1]}} University</h5>
+                <div class="card-footer" style="width: 18rem;">
+                    <span class="badge badge-primary" >{{ post[8] }} MSc | {{ post[9] }} PHD</span>
                 </div>
-                {% if posts[1]|length > 3 %}
-                <a class="carousel-control-prev" href="#carouselSupervisor" role="button" data-slide="prev">
-
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: brightness(0.5);"></span>
-
-                    <span class="sr-only">Previous</span>
-
-                </a>
-                <a class="carousel-control-next" href="#carouselSupervisor" role="button" data-slide="next">
-
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="filter: brightness(0.5);"></span>
-
-                    <span class="sr-only">Next</span>
-
-                </a>
-                {% endif %}
             </div>
         </div>
-    
-    
-    
-        <div class="card-deck">
-            <div id="carouselUni" class="carousel slide d-none d-sm-none d-md-block" data-ride="carousel">
-                <div class="carousel-inner">
-                        {% for supervisor_no in range(0, posts[0]|length) %}
-        
-                        {% if supervisor_no%3==0 %}
-        
-                            {% if supervisor_no==0 %}
-                                <div class="carousel-item active">
-                            {% else %}
-                                <div class="carousel-item">
-                            {% endif%}
-                            <div class="row">
-                        {% endif%}
-                            <div class="col">
-                                
-                                <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
-                                    <div class="CardMain card text-center" style="width: 18rem;">
-                                        <a>
-                                            <h4 class="CardMain">{{posts[0][supervisor_no][0]}}</h4>
-                                        </a>
-                                            <h5 class="CardMain">Country: {{ posts[0][supervisor_no][1] }}</h5>
-                                            <h6 class="CardMain">Rank: {{ posts[0][supervisor_no][2] }}</h6>
-                                    <div class="card-footer" style="width: 18rem;">
-                                        <span class="badge badge-info">Number of supervisors: {{ posts[0][supervisor_no][4] }}</span>
-                                    </div>
-                                    </div>
-                                </div>
-        
-                            </div>
-                        {% if supervisor_no%4==2 %}
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-                        
-        
-                    </div>
-        
+
+        <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
+            <div class="CardMain card text-center" style="width: 18rem;padding-top: 1rem;">
+                <h4 class="CardMain">{{post[2]}} sent email</h4>
+                <div class="card-footer" style="width: 18rem;">
+                        <span class="badge badge-success" >{{ post[3] }} Good Answer</span>
+                        <span class="badge badge-danger" >{{ post[4] }} Bad Answer</span>
+                        <span class="badge badge-warning" >{{ post[2]-(post[3]+post[4]) }} Not Answered</span>
                 </div>
-                {% if posts[0]|length > 3 %}
-                <a class="carousel-control-prev" href="#carouselUni" role="button" data-slide="prev">
-        
-                    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: brightness(0.5);"></span>
-        
-                    <span class="sr-only">Previous</span>
-        
-                </a>
-                <a class="carousel-control-next" href="#carouselUni" role="button" data-slide="next">
-        
-                    <span class="carousel-control-next-icon" aria-hidden="true" style="filter: brightness(0.5);"></span>
-        
-                    <span class="sr-only">Next</span>
-        
-                </a>
-                {% endif %}
             </div>
         </div>
+
+        <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
+            <div class="CardMain card text-center" style="width: 18rem;padding-top: 1rem;">
+                <h4 class="CardMain">Interviews</h4>
+                <div class="card-footer" style="width: 18rem;">
+                    <span class="badge badge-success" >{{ post[7] }} Good Interview</span>
+                    <span class="badge badge-danger" >{{ post[6] }} Bad Interview</span>
+                    <span class="badge badge-warning" >{{ post[5] }} Scheduled Interview</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     
 </div>
 {% endblock %}
