@@ -22,7 +22,11 @@ class WebApp():
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM universities')
             universities = cursor.fetchall()
-            return flask.render_template('index.html', posts=universities)
+
+            cursor.execute('SELECT * FROM supervisors')
+            supervisors = cursor.fetchall()
+
+            return flask.render_template('index.html', posts=[universities, supervisors])
 
         @app.route('/universities')
         def universities():
