@@ -25,8 +25,8 @@ def insert_supervisor(conn, name, university, email, country, position_type, ema
     cursor = conn.cursor()
     existence_bool_supervisor = utils.check_existence_supervisor_in_supervisors(conn, email)
     if not existence_bool_supervisor:
-        rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes)]
-        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?,?,?,?,?)', rows)
+        rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, None)]
+        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?,?,?,?,?,?)', rows)
         conn.commit()
         existence_bool_university = utils.check_existence_university_in_universities(conn, university)
         if not existence_bool_university:
@@ -36,8 +36,26 @@ def insert_supervisor(conn, name, university, email, country, position_type, ema
         success_bool = 0
     return success_bool
 
+def edit_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, id, rank=None, webpage=None):
+    cursor = conn.cursor()
+
+    rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, id)]
+    cursor.executemany('''update supervisors set name=?, university=?, email=?, country=?, emailed=?, answer=?, interview=?,
+                          position_type=?, webpage=?, university_rank=?, notes=? where id=?''', rows)
+    conn.commit()
+    existence_bool_university = utils.check_existence_university_in_universities(conn, university)
+    if not existence_bool_university:
+        insert_university(conn, university, country, rank=None)
+
+def delete_supervisor(conn, id):
+    cursor = conn.cursor()
+    cursor.execute('''delete from supervisors where id=?''', (id,))
+    conn.commit()
+
 def insert_university(conn, name='sharif', country=None, rank=None):
     cursor = conn.cursor()
-    rows = [(name, country, rank)]
-    cursor.executemany('insert into universities values (?, ?, ?)', rows)
+    rows = [(name, country, rank, None)]
+    cursor.executemany('insert into universities values (?, ?, ?, ?)', rows)
     conn.commit()
+
+

@@ -10,7 +10,7 @@
 
         <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
             <div class="CardMain card text-center" style="width: 18rem;">
-                <a>
+                <a href="{{ url_for('supervisor', id=post[11]) }}">
                     <h4 class="CardMain">{{post[0]}}</h4>
                 </a>
                     <h5 class="CardMain">{{ post[1] }} - {{ post[3] }}</h5>
@@ -40,6 +40,7 @@
                     <span class="badge badge-success" >interview: {{ post[6] }}</span>
                 {% endif %}
                 <span class="badge badge-dark">Type: {{ post[7] }}</span>
+                </div>
             </div>
             </div>
         </div>

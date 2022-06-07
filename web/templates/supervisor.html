@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <title>Add Supervisor</title>
+ <h1>Add New Supervisor</h1>
+ <div class="container border rounded addpage">
+ <form action="{{ url_for('edit_supervisor_in_db', id=posts[0][11]) }}" method=post enctype=multipart/form-data>
+    <div class="form-row uploadrows">
+        <div class="form-group col-md-6">
+            <label for="name">Name*</label>
+            <input class="form-control" name="name" value="{{posts[0][0]}}"> 
+        </div>
+
+        <div class="form-group col-md-6">
+            <label for="university">University*</label>
+            <input class="form-control" name="university" value="{{posts[0][1]}}"> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="email">Email*</label>
+          <input class="form-control" name="email" value="{{posts[0][2]}}"> 
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="country">Country*</label>
+          <input class="form-control" name="country" value="{{posts[0][3]}}"> 
+        </div>
+
+
+        <div class="form-group col-md-6">
+          <label for="webpage">Webpage</label>
+          <input class="form-control" name="webpage" value="{{posts[0][4]}}"> 
+        </div>
+
+
+        <div class="form-group col-md-6">
+          <label for="university_rank">University Rank</label>
+          <input class="form-control" name="university_rank" value="{{posts[0][5]}}"> 
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="position_type" >Position type </label>
+          <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
+              {% if posts[0][7]=="MSc" %}
+                <option selected="MSc">MSc</option>
+                <option  value="PHD">PHD</option>
+                <option  value="Other">Other</option>
+              {% elif posts[0][7]=="PHD"%}
+                <option value="MSc">MSc</option>
+                <option  selected="PHD">PHD</option>
+                <option  value="Other">Other</option>
+              {% elif posts[0][7]=="Other"%}
+                <option value="MSc">MSc</option>
+                <option  value="PHD">PHD</option>
+                <option  selected="Other">Other</option>
+              {% endif %}
+
+          </select>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="emailed" >Email: </label>
+          <select class="form-select" name="emailed" id="emailed" aria-label="Default select example">
+               
+              {% if posts[0][4]=="No" %}
+                <option selected="No">No</option>
+                <option  value="Yes">Yes</option>
+              {% else %}
+                <option selected="Yes">Yes</option>
+                <option  value="No">No</option>
+              {% endif %}
+          </select>
+
+        </div>
+
+
+        <div class="form-group col-md-3">
+          <label for="answer" >Answer: </label>
+          <select class="form-select" name="answer" id="answer" aria-label="Default select example">
+              {% if posts[0][5]=="Not Yet" %}
+                <option selected="Not Yet">Not Yet</option>
+                <option  value="Bad">Bad</option>
+                <option  value="Good">Good</option>
+              {% elif posts[0][5]=="Bad"%}
+                <option value="Not Yet">Not Yet</option>
+                <option  selected="Bad">Bad</option>
+                <option  value="Good">Good</option>
+              {% elif posts[0][5]=="Good"%}
+                <option value="Not Yet">Not Yet</option>
+                <option  value="Bad">Bad</option>
+                <option  selected="Good">Good</option>
+              {% endif %}
+          </select>
+        </div>
+
+        <div class="form-group col-md-3">
+          <label for="interview" >Interview: </label>
+          <select class="form-select" name="interview" id="interview" aria-label="Default select example">
+              {% if posts[0][6]=="Not Yet" %}
+                <option selected="Not Yet">Not Yet</option>
+                <option value="Scheduled">Scheduled</option>
+                <option  value="Bad">Bad</option>
+                <option  value="Good">Good</option>
+              {% elif posts[0][6]=="Scheduled"  %}
+                <option value="Not Yet">Not Yet</option>
+                <option selected="Scheduled">Scheduled</option>
+                <option  value="Bad">Bad</option>
+                <option  value="Good">Good</option>
+              {% elif posts[0][6]=="Bad"  %}
+                <option value="Not Yet">Not Yet</option>
+                <option value="Scheduled">Scheduled</option>
+                <option  selected="Bad">Bad</option>
+                <option  value="Good">Good</option>
+              {% elif posts[0][6]=="Good"  %}
+                <option value="Not Yet">Not Yet</option>
+                <option value="Scheduled">Scheduled</option>
+                <option  value="Bad">Bad</option>
+                <option  selected="Good">Good</option>
+              {% endif %}
+          </select>
+        </div>
+        
+        <div class="form-group col-md-12">
+          <label for="notes">Notes</label>
+          <textarea class="form-control" id="notes" rows="3" name="notes"  value="{{posts[0][10]}}"></textarea>
+        </div>
+    </div>    
+
+
+  
+</div>
+<div class="input-group mb-3 row">
+
+  <div class="col-md-4">
+    <button class="btn btn-primary" type=submit> Update supervisor</button>
+    <a href="{{ url_for('delete_supervisor_in_db', id=posts[0][11]) }}" class="btn btn-danger">Delete supervisor</a>
+  </div>
+
+</div>
+</div>
+
+
+
+
+ </form>
+</div>
+
+
+ 
+ {% endblock %}
