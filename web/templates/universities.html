@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{% block title %} Universities {% endblock %}</h1> 
+
+    <div class="card-deck">
+    
+    {% for post in posts %}
+
+        <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
+            <div class="CardMain card text-center" style="width: 18rem;">
+                <a>
+                    <h4 class="CardMain">{{post[0]}}</h4>
+                </a>
+                    <h5 class="CardMain">Country: {{ post[1] }}</h5>
+                    <h6 class="CardMain">Rank: {{ post[2] }}</h6>
+            <div class="card-footer" style="width: 18rem;">
+                <span class="badge badge-info">Number of supervisors: {{ post[4] }}</span>
+            </div>
+            </div>
+        </div>
+        <hr>
+        
+    {% endfor %}
+    
+    </div>
+</div>
+{% endblock %}
