@@ -4,6 +4,53 @@
 <div class="container">
     <h1>{% block title %} Supervisors {% endblock %}</h1> 
 
+    <form action="/insert_supervisor_to_db" method=post enctype=multipart/form-data>
+        <div class="row" style="padding-top: 2rem;text-align: center;">
+            <div class="form-group col">
+            <label for="emailed">Emailed:</label>
+            <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
+                <option selected="all">All</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            </div>
+            <div class="form-group col">
+                <label for="Answered">Answered</label>
+                <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
+                    <option selected="all">All</option>
+                    <option value="no">No</option>
+                    <option value="good">Good</option>
+                    <option value="bad">Bad</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="interview">Interview</label>
+                <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
+                    <option selected="all">All</option>
+                    <option value="no">No</option>
+                    <option value="scheduled">Scheduled</option>
+                    <option value="good">Good</option>
+                    <option value="bad">Bad</option>
+                </select>
+            </div>
+            <div class="form-group col">
+                <label for="interview">Position Type</label>
+                <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
+                    <option selected="all">All</option>
+                    <option selected="MSc">MSc</option>
+                    <option value="PHD">PHD</option>
+                </select>
+            </div>
+
+            <div class="form-group col">
+                <button class="btn btn-primary" type=submit Course> Filter</button>
+            </div>
+        </div>
+
+
+            
+    </form>
+
     <div class="card-deck">
     
     {% for post in posts %}

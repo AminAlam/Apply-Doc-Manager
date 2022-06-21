@@ -7,7 +7,6 @@ def init_db(db_configs):
     operators.create_table(db_configs.conn, db_configs.sql_create_table_universities)
     operators.create_table(db_configs.conn, db_configs.sql_create_table_supervisors)
 
-
 def check_existence_table(db_configs):
     conn = db_configs.conn
     cursor = conn.cursor()
@@ -61,8 +60,10 @@ def info(supervisors, universities):
         if supervisor[4] == 'Yes':
             num_email_sent += 1
         if supervisor[5] == 'Good':
+            num_email_sent += 1
             num_good_answers += 1
         elif supervisor[5] == 'Bad':
+            num_email_sent += 1
             num_bad_answers += 1
         
         if supervisor[6] == 'Scheduled':
