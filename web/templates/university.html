@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>{% block title %} Supervisors from {{posts[0][1]}} {% endblock %}</h1> 
+
+    <div class="card-deck">
+    
+    {% for post in posts %}
+
+        <div class="card-block" style="margin: .5rem; margin-bottom: 1em; margin-top: 1em">
+            <div class="CardMain card text-center" style="width: 18rem;">
+                <a href="{{ url_for('supervisor', id=post[11]) }}">
+                    <h4 class="CardMain">{{post[0]}}</h4>
+                </a>
+                    <h5 class="CardMain">{{ post[1] }} - {{ post[3] }}</h5>
+                    <h6 class="CardMain">{{ post[2] }}</h6>
+            <div class="card-footer" style="width: 18rem;">
+                {% if post[4]=="No" %}
+                    <span class="badge badge-danger" >emailed: {{ post[4] }}</span>
+                {% else %}
+                    <span class="badge badge-success" >emailed: {{ post[4] }}</span>
+                {% endif %}
+
+                {% if post[5]=="Not Yet" %}
+                    <span class="badge badge-secondary" >answered: {{ post[5] }}</span>
+                {% elif post[5]=="Bad"  %}
+                    <span class="badge badge-danger" >answered: {{ post[5] }}</span>
+                {% elif post[5]=="Good"  %}
+                    <span class="badge badge-success" >answered: {{ post[5] }}</span>
+                {% endif %}
+
+                {% if post[6]=="Not Yet" %}
+                    <span class="badge badge-secondary" >interview: {{ post[6] }}</span>
+                {% elif post[6]=="Scheduled"  %}
+                    <span class="badge badge-info" >interview: {{ post[6] }}</span>
+                {% elif post[6]=="Bad"  %}
+                    <span class="badge badge-danger" >interview: {{ post[6] }}</span>
+                {% elif post[6]=="Good"  %}
+                    <span class="badge badge-success" >interview: {{ post[6] }}</span>
+                {% endif %}
+                <span class="badge badge-dark">Type: {{ post[7] }}</span>
+                </div>
+            </div>
+        </div>
+        
+        
+    {% endfor %}
+</div>
+    </div>
+</div>
+{% endblock %}
