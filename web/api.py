@@ -1,5 +1,3 @@
-from email import message
-import errno
 import sys
 sys.path.append('../database')
 sys.path.append('../utils')
@@ -177,7 +175,7 @@ class WebApp():
                 infos= tuple(infos)
                 cursor.execute(sql_command, infos)
                 supervisors = cursor.fetchall()
-                
+
                 filters = [emailed, answered, interview, position_type]
                 return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
 
