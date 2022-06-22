@@ -40,7 +40,6 @@ class WebApp():
                 cursor.execute("SELECT rowid FROM supervisors WHERE university = ?", (universities[university_no][0],))
                 num_supervisors = len(cursor.fetchall())
                 universities[university_no] = universities[university_no]+(num_supervisors, )
-            print(universities[0])
             return flask.render_template('universities.html', posts=universities)
 
         @app.route('/<int:id>/university')
