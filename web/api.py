@@ -60,7 +60,8 @@ class WebApp():
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM supervisors')
             supervisors = cursor.fetchall()
-            return flask.render_template('supervisors.html', posts=supervisors)
+            filters = ['All', 'All', 'All', 'All']
+            return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
 
         
         @app.route('/<int:id>/supervisor')
@@ -111,7 +112,6 @@ class WebApp():
                 print(message)
                 return flask.redirect(flask.url_for('index'))
 
-
         @app.route('/<int:id>/edit_supervisor_in_db', methods=['GET', 'POST'])
         def edit_supervisor_in_db(id):
             if flask.request.method == 'POST':
@@ -139,7 +139,6 @@ class WebApp():
                                 emailed=emailed, answer=answer, interview=interview, notes=notes, id=id)
             
                 message = 'Supervisor is updated successfully'
-                
                 flask.flash(message)
                 print(message)
                 return flask.redirect(flask.url_for('supervisor', id=id))
@@ -151,5 +150,36 @@ class WebApp():
             flask.flash(message)
             return flask.redirect(flask.url_for('supervisors'))
 
+        @app.route('/supervisors_format', methods=['GET', 'POST'])
+        def supervisors_format():
+            if flask.request.method == 'POST':
+                emailed = flask.request.form['emailed']
+                answered = flask.request.form['answered']
+                interview = flask.request.form['interview']
+                position_type = flask.request.form['position_type']
+
+                sql_command = 'SELECT * FROM supervisors WHERE ' 
+                infos = []
+                if emailed != 'All':
+                    sql_command = sql_command + 'emailed=? AND '
+                    infos.append(emailed)
+                if answered != 'All':
+                    sql_command = sql_command + 'answer=? AND '
+                    infos.append(answered)
+                if interview != 'All':
+                    sql_command = sql_command + 'interview=? AND '
+                    infos.append(interview)
+                if position_type != 'All':
+                    sql_command = sql_command + 'position_type=? AND '
+                    infos.append(position_type)
+                sql_command = sql_command + '1'
+                cursor = self.db_configs.conn.cursor()
+                infos= tuple(infos)
+                cursor.execute(sql_command, infos)
+                supervisors = cursor.fetchall()
+                
+                filters = [emailed, answered, interview, position_type]
+                return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
+
         t = Thread(target=self.app.run, args=(self.ip,self.port,False))
-        t.start()
+        t.start()        

@@ -4,41 +4,107 @@
 <div class="container">
     <h1>{% block title %} Supervisors {% endblock %}</h1> 
 
-    <form action="/insert_supervisor_to_db" method=post enctype=multipart/form-data>
+    <form action="/supervisors_format" method=post enctype=multipart/form-data>
         <div class="row" style="padding-top: 2rem;text-align: center;">
             <div class="form-group col">
-            <label for="emailed">Emailed:</label>
-            <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
-                <option selected="all">All</option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
-            </div>
-            <div class="form-group col">
-                <label for="Answered">Answered</label>
-                <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
-                    <option selected="all">All</option>
-                    <option value="no">No</option>
-                    <option value="good">Good</option>
-                    <option value="bad">Bad</option>
+                <label for="emailed">Emailed:</label>
+                <select class="form-select" name="emailed" id="emailed" aria-label="Default select example">
+                    {% if filters[0]=="All" %}
+                        <option selected="All">All</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    {% elif filters[0]=="Yes" %}
+                        <option value="All">All</option>
+                        <option selected="Yes">Yes</option>
+                        <option value="No">No</option>
+                    {% elif filters[0]=="No" %}
+                        <option value="All">All</option>
+                        <option value="Yes">Yes</option>
+                        <option selected="No">No</option>
+                    {% endif %}
                 </select>
             </div>
+
+            <div class="form-group col">
+                <label for="answered">Answered</label>
+                <select class="form-select" name="answered" id="answered" aria-label="Default select example">
+                    {% if filters[1]=="All" %}
+                        <option selected="All">All</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option value="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[1]=="Not Yet"  %}
+                        <option value="All">All</option>
+                        <option selected="Not Yet">Not Yet</option>
+                        <option value="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[1]=="Good"  %}
+                        <option value="All">All</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option selected="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[1]=="Bad"  %}
+                        <option value="All">Good</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option value="Good">Good</option>
+                        <option selected="Bad">Bad</option>
+                    {% endif %}
+                </select>
+            </div>
+
             <div class="form-group col">
                 <label for="interview">Interview</label>
-                <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
-                    <option selected="all">All</option>
-                    <option value="no">No</option>
-                    <option value="scheduled">Scheduled</option>
-                    <option value="good">Good</option>
-                    <option value="bad">Bad</option>
+                <select class="form-select" name="interview" id="interview" aria-label="Default select example">
+                    {% if filters[2]=="All" %}
+                        <option selected="All">All</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[2]=="Not Yet"  %}
+                        <option value="All">All</option>
+                        <option selected="Not Yet">Not Yet</option>
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[2]=="Scheduled"  %}
+                        <option value="All">All</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option selected="Scheduled">Scheduled</option>
+                        <option value="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[2]=="Good"  %}
+                        <option value="All">All</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option value="Scheduled">Scheduled</option>
+                        <option selected="Good">Good</option>
+                        <option value="Bad">Bad</option>
+                    {% elif filters[2]=="Bad"  %}
+                        <option value="All">All</option>
+                        <option value="Not Yet">Not Yet</option>
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Good">Good</option>
+                        <option selected="Bad">Bad</option>
+                    {% endif %}
                 </select>
             </div>
+
             <div class="form-group col">
-                <label for="interview">Position Type</label>
+                <label for="position_type">Position Type</label>
                 <select class="form-select" name="position_type" id="position_type" aria-label="Default select example">
-                    <option selected="all">All</option>
-                    <option selected="MSc">MSc</option>
-                    <option value="PHD">PHD</option>
+                    {% if filters[3]=="All" %}
+                        <option selected="All">All</option>
+                        <option value="MSc">MSc</option>
+                        <option value="PHD">PHD</option>
+                    {% elif filters[3]=="MSc" %}
+                        <option value="All">All</option>
+                        <option selected="MSc">MSc</option>
+                        <option value="PHD">PHD</option>
+                    {% elif filters[3]=="PHD" %}
+                        <option value="All">All</option>
+                        <option value="MSc">MSc</option>
+                        <option selected="PHD">PHD</option>
+                    {% endif %}
                 </select>
             </div>
 
