@@ -1,6 +1,6 @@
 # Apply-Doc-Manager
 
-I am not interested in Excel or Google Docs, so I made this to manage my documents during the scientific apply process. Please note that it's not a commercial programm and is basic.
+I am not interested in Excel or Google Docs, so I made this to manage my documents during the scientific apply procedure. Please note that it's not a commercial programm and is basic.
 
 ## Requirements
 You can install the dependencies by running:  `pip install -r requirements.txt`
