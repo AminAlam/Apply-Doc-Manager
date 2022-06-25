@@ -66,7 +66,6 @@ class WebApp():
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM supervisors where id = ?', (id,))
             supervisor = cursor.fetchall()
-            print(supervisor)
             return flask.render_template('supervisor.html', posts=supervisor)
 
 
@@ -106,7 +105,6 @@ class WebApp():
                     message = 'Supervisor already exists'
 
                 flask.flash(message)
-                print(message)
                 return flask.redirect(flask.url_for('index'))
 
         @app.route('/<int:id>/edit_supervisor_in_db', methods=['GET', 'POST'])
@@ -137,7 +135,6 @@ class WebApp():
             
                 message = 'Supervisor is updated successfully'
                 flask.flash(message)
-                print(message)
                 return flask.redirect(flask.url_for('supervisor', id=id))
 
         @app.route('/<int:id>/delete_supervisor_in_db', methods=['GET', 'POST'])
