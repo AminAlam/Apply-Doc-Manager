@@ -53,6 +53,7 @@ def update_university(conn, name, country, rank=None):
     cursor = conn.cursor()
     rows = [(country, rank, name)]
     cursor.executemany('update universities set country=?, rank=? where name=?', rows)
+    cursor.executemany('update supervisors set university_rank=? where university=?', [(rank, name)])
     conn.commit()
 
 def delete_supervisor(conn, id):
