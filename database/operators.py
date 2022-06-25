@@ -46,6 +46,14 @@ def edit_supervisor(conn, name, university, email, country, position_type, email
     existence_bool_university = utils.check_existence_university_in_universities(conn, university)
     if not existence_bool_university:
         insert_university(conn, university, country, rank=None)
+    else:
+        update_university(conn, university, country, rank=rank)
+
+def update_university(conn, name, country, rank=None):
+    cursor = conn.cursor()
+    rows = [(country, rank, name)]
+    cursor.executemany('update universities set country=?, rank=? where name=?', rows)
+    conn.commit()
 
 def delete_supervisor(conn, id):
     cursor = conn.cursor()
