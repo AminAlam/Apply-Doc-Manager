@@ -209,7 +209,7 @@ class WebApp():
             file_name = 'supervisors.csv'
             with open('web/'+file_name, 'w') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(['Name', 'University', 'Email', 'Country', 'Webpage', 'Position Type', 'University Rank', 'Answered', 'Interviewed', 'Emailed', 'Notes', 'ID'])
+                writer.writerow(['Name', 'University', 'Email', 'Country', 'Emailed?', 'Answered?', 'Interviewed?', 'Position Type', 'Webpage', 'Univerity Rank', 'Notes', 'ID'])
                 for supervisor in supervisors:
                     writer.writerow(supervisor)
             send_file(file_name)
