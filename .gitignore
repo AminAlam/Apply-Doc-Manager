@@ -2,3 +2,4 @@ __pycache__
 .DS_Store
 *.db
 apply_doc_manager/
+*.csv

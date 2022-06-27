@@ -30,7 +30,7 @@ def insert_supervisor(conn, name, university, email, country, position_type, ema
         conn.commit()
         existence_bool_university = utils.check_existence_university_in_universities(conn, university)
         if not existence_bool_university:
-            insert_university(conn, university, country, rank=None)
+            insert_university(conn, university, country, rank=rank)
         success_bool = 1
     else:
         success_bool = 0
