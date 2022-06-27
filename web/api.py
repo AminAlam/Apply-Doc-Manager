@@ -6,6 +6,7 @@ import utils
 import operators
 import flask
 from threading import Thread
+import csv
 
 class WebApp():
     def __init__(self, db_configs, ip, port, static_folder): 
@@ -192,13 +193,36 @@ class WebApp():
                 cursor.execute('SELECT * FROM universities ORDER BY rank DESC')
                 filters = ['Descending']
             universities = cursor.fetchall()
-            
+
             for university_no in range(0,len(universities)):
                 cursor.execute("SELECT rowid FROM supervisors WHERE university = ?", (universities[university_no][0],))
                 num_supervisors = len(cursor.fetchall())
                 universities[university_no] = universities[university_no]+(num_supervisors, )
 
             return flask.render_template('universities.html', posts=universities, filters=filters)
+
+        @app.route('/export_csv')
+        def export_csv():
+            cursor = self.db_configs.conn.cursor()
+            cursor.execute('SELECT * FROM supervisors')
+            supervisors = cursor.fetchall()
+            file_name = 'supervisors.csv'
+            with open('web/'+file_name, 'w') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(['Name', 'University', 'Email', 'Country', 'Webpage', 'Position Type', 'University Rank', 'Answered', 'Interviewed', 'Emailed', 'Notes', 'ID'])
+                for supervisor in supervisors:
+                    writer.writerow(supervisor)
+            send_file(file_name)
+            flask.flash(flask.Markup("CSV file is exported successfully! File is located at: <a href='"+file_name+"' download class='alert-link'>here </a>"))
+            return flask.redirect(flask.url_for('index'))
+
+        # flask send file for download
+        @app.route('/<path:path>')
+        def send_file(path):
+            # flask send file to browser for download
+            print(app.root_path, path)
+            return flask.send_from_directory(app.root_path, path, as_attachment=True)
+
 
         t = Thread(target=self.app.run, args=(self.ip,self.port,False))
         t.start()        
