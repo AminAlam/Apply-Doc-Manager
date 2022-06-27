@@ -40,7 +40,8 @@ class WebApp():
                 cursor.execute("SELECT rowid FROM supervisors WHERE university = ?", (universities[university_no][0],))
                 num_supervisors = len(cursor.fetchall())
                 universities[university_no] = universities[university_no]+(num_supervisors, )
-            return flask.render_template('universities.html', posts=universities)
+            filters = ['Default']
+            return flask.render_template('universities.html', posts=universities, filters=filters)
 
         @app.route('/<int:id>/university')
         def university(id):
@@ -168,12 +169,36 @@ class WebApp():
                     infos.append(position_type)
                 sql_command = sql_command + '1'
                 cursor = self.db_configs.conn.cursor()
-                infos= tuple(infos)
+                infos = tuple(infos)
                 cursor.execute(sql_command, infos)
                 supervisors = cursor.fetchall()
 
                 filters = [emailed, answered, interview, position_type]
                 return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
+
+        @app.route('/universities_format', methods=['GET', 'POST'])
+        def universities_format():
+            rank = flask.request.form['rank']
+            if rank == 'Default':
+                cursor = self.db_configs.conn.cursor()
+                cursor.execute('SELECT * FROM universities')
+                filters = ['Default']
+            elif rank == 'Ascending':
+                cursor = self.db_configs.conn.cursor()
+                cursor.execute('SELECT * FROM universities ORDER BY rank ASC')
+                filters = ['Ascending']
+            else:
+                cursor = self.db_configs.conn.cursor()
+                cursor.execute('SELECT * FROM universities ORDER BY rank DESC')
+                filters = ['Descending']
+            universities = cursor.fetchall()
+            
+            for university_no in range(0,len(universities)):
+                cursor.execute("SELECT rowid FROM supervisors WHERE university = ?", (universities[university_no][0],))
+                num_supervisors = len(cursor.fetchall())
+                universities[university_no] = universities[university_no]+(num_supervisors, )
+
+            return flask.render_template('universities.html', posts=universities, filters=filters)
 
         t = Thread(target=self.app.run, args=(self.ip,self.port,False))
         t.start()        
