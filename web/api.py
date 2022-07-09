@@ -59,6 +59,12 @@ class WebApp():
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM supervisors')
             supervisors = cursor.fetchall()
+            for supervisor_no, supervisor in enumerate(supervisors):
+                if supervisor[4] == 'Yes':
+                    diff = utils.calc_difference_dates(supervisor[12])
+                    supervisor = list(supervisor)
+                    supervisor[4] = '{0} Days ago'.format(diff)
+                    supervisors[supervisor_no] = tuple(supervisor)
             filters = ['All', 'All', 'All', 'All']
             return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
 
