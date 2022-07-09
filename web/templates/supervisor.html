@@ -2,8 +2,8 @@
 
 {% block content %}
 
- <title>Add Supervisor</title>
- <h1>Add New Supervisor</h1>
+ <title>Supervisor</title>
+ <h1>Edit Supervisor</h1>
  <div class="container border rounded addpage">
  <form action="{{ url_for('edit_supervisor_in_db', id=posts[0][11]) }}" method=post enctype=multipart/form-data>
     <div class="form-row uploadrows">
@@ -60,8 +60,9 @@
         </div>
 
         <div class="form-group col-md-3">
+          <div class="row">
           <label for="emailed" >Email: </label>
-          <select class="form-select" name="emailed" id="emailed" aria-label="Default select example">
+          <select class="form-select" name="emailed" id="emailed" aria-label="Default select example" onchange="showEmailDate('email_date', this)">
                
               {% if posts[0][4]=="No" %}
                 <option selected="No">No</option>
@@ -71,7 +72,11 @@
                 <option  value="No">No</option>
               {% endif %}
           </select>
-
+        </div>
+          <div class="row" style="padding-top: 1rem; display: none;" id="email_date">
+            <label for="start">date:</label>
+            <input type="date" id="email_date_value" name="email_date_value" min="2022-01-01" max="2099-12-31" value="{{posts[0][12]}}">
+          </div>
         </div>
 
 
@@ -130,7 +135,7 @@
 
   
 </div>
-<div class="input-group mb-3 row">
+<div class="input-group mb-3 row" style="padding-bottom: 2rem; padding-top: 2rem;">
 
   <div class="col-md-4">
     <button class="btn btn-primary" type=submit> Update supervisor</button>
