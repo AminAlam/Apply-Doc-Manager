@@ -12,7 +12,7 @@ import api
 
 port = 8080
 ip = 'localhost'
-static_folder = './web'
+static_folder = 'web'
 
 db_configs = configs.database_configs()
 

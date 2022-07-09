@@ -49,12 +49,22 @@
         </div>
 
         <div class="form-group col-md-3">
+          <div class="row">
           <label for="emailed" >Email: </label>
-          <select class="form-select" name="emailed" id="emailed" aria-label="Default select example">
+          <select class="form-select" name="emailed" id="emailed" aria-label="Default select example" onchange="showEmailDate('email_date', this)">
               <option selected="No">No</option>
               <option  value="Yes">Yes</option>
           </select>
+          </div>
+          <div class="row" style="padding-top: 1rem; display: none;" id="email_date">
+            <label for="start">date:</label>
+            <input type="date" id="start" name="trip-start" min="2022-01-01" max="2099-12-31" value="2022-07-01">
         </div>
+        </div>
+
+
+
+
 
         <div class="form-group col-md-3">
           <label for="answer" >Answer: </label>

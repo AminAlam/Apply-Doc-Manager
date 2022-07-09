@@ -216,12 +216,18 @@ class WebApp():
             flask.flash(flask.Markup("CSV file is exported successfully! File is located at: <a href='"+file_name+"' download class='alert-link'>here </a>"))
             return flask.redirect(flask.url_for('index'))
 
+        @app.route("/<path:filename>")
+        def static_dir(filename):
+            return flask.send_from_directory(app.root_path, self.app.static_folder, filename)
+
         # flask send file for download
         @app.route('/<path:path>')
         def send_file(path):
             # flask send file to browser for download
             print(app.root_path, path)
             return flask.send_from_directory(app.root_path, path, as_attachment=True)
+
+
 
 
         t = Thread(target=self.app.run, args=(self.ip,self.port,False))
