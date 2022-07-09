@@ -79,6 +79,7 @@ class WebApp():
         def insert_supervisor_to_db():
             if flask.request.method == 'POST':
                 try:
+                    print(flask.request.form)
                     name = flask.request.form['name']
                     university = flask.request.form['university']
                     email = flask.request.form['email']
@@ -90,6 +91,7 @@ class WebApp():
                     answer = flask.request.form['answer']
                     interview = flask.request.form['interview']
                     notes = flask.request.form['notes']
+                    email_date = flask.request.form['email_date_value']
                 except:
                     flask.flash('Please Fill all the Forms')
                     return flask.redirect(flask.url_for('insert_supervisor'))
@@ -99,7 +101,8 @@ class WebApp():
                     return flask.redirect(flask.url_for('insert_supervisor'))
                 success_bool = operators.insert_supervisor(self.db_configs.conn, name, university, email, country,
                                 webpage=webpage, position_type=position_type, rank=university_rank, 
-                                emailed=emailed, answer=answer, interview=interview, notes=notes)
+                                emailed=emailed, answer=answer, interview=interview, notes=notes,
+                                email_date=email_date)
 
                 if success_bool:
                     message = 'Supervisor is added successfully'
@@ -124,6 +127,7 @@ class WebApp():
                     answer = flask.request.form['answer']
                     interview = flask.request.form['interview']
                     notes = flask.request.form['notes']
+                    email_date = flask.request.form['email_date_value']
                 except:
                     flask.flash('Please Fill all the Forms')
                     return flask.redirect(flask.url_for('supervisor', id=id))
@@ -133,7 +137,8 @@ class WebApp():
                     return flask.redirect(flask.url_for('supervisor', id=id))
                 operators.edit_supervisor(self.db_configs.conn, name, university, email, country,
                                 webpage=webpage, position_type=position_type, rank=university_rank, 
-                                emailed=emailed, answer=answer, interview=interview, notes=notes, id=id)
+                                emailed=emailed, answer=answer, interview=interview, notes=notes, id=id,
+                                email_date=email_date)
             
                 message = 'Supervisor is updated successfully'
                 flask.flash(message)
@@ -216,12 +221,18 @@ class WebApp():
             flask.flash(flask.Markup("CSV file is exported successfully! File is located at: <a href='"+file_name+"' download class='alert-link'>here </a>"))
             return flask.redirect(flask.url_for('index'))
 
+        @app.route("/<path:filename>")
+        def static_dir(filename):
+            return flask.send_from_directory(app.root_path, self.app.static_folder, filename)
+
         # flask send file for download
         @app.route('/<path:path>')
         def send_file(path):
             # flask send file to browser for download
             print(app.root_path, path)
             return flask.send_from_directory(app.root_path, path, as_attachment=True)
+
+
 
 
         t = Thread(target=self.app.run, args=(self.ip,self.port,False))

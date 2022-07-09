@@ -21,12 +21,14 @@ def create_table(conn, create_table_sql):
     except Error as e:
         print(e)
 
-def insert_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, rank=None, webpage=None):
+def insert_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, email_date=None, rank=None, webpage=None):
     cursor = conn.cursor()
     existence_bool_supervisor = utils.check_existence_supervisor_in_supervisors(conn, email)
     if not existence_bool_supervisor:
-        rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, None)]
-        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?,?,?,?,?,?)', rows)
+        if emailed=='No':
+            email_date = None
+        rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, None, email_date)]
+        cursor.executemany('insert into supervisors values (?,?,?,?,?,?,?,?,?,?,?,?,?)', rows)
         conn.commit()
         existence_bool_university = utils.check_existence_university_in_universities(conn, university)
         if not existence_bool_university:
@@ -36,12 +38,12 @@ def insert_supervisor(conn, name, university, email, country, position_type, ema
         success_bool = 0
     return success_bool
 
-def edit_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, id, rank=None, webpage=None):
+def edit_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, id, email_date=None, rank=None, webpage=None):
     cursor = conn.cursor()
 
-    rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, id)]
+    rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, email_date, id)]
     cursor.executemany('''update supervisors set name=?, university=?, email=?, country=?, emailed=?, answer=?, interview=?,
-                          position_type=?, webpage=?, university_rank=?, notes=? where id=?''', rows)
+                          position_type=?, webpage=?, university_rank=?, notes=?, email_date=? where id=?''', rows)
     conn.commit()
     existence_bool_university = utils.check_existence_university_in_universities(conn, university)
     if not existence_bool_university:
