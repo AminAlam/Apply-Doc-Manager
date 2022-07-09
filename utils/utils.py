@@ -82,3 +82,13 @@ def info(supervisors, universities):
             num_good_answers, num_bad_answers, num_scheduled_interviews, 
             num_bad_interviews, num_good_interviews, num_msc_positions, 
             num_phd_positions]
+
+
+def apply_updates2db(db_configs):
+    # add email_date to the database
+    cursor = db_configs.conn.cursor()
+    cursor.execute('SELECT * FROM universities')
+    cursor.execute('SELECT * FROM supervisors')
+    column_names = list(map(lambda x: x[0], cursor.description))
+    if 'email_date' not in column_names:
+        cursor.execute('ALTER TABLE supervisors ADD COLUMN email_date timestamp')
