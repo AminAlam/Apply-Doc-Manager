@@ -2,6 +2,8 @@ import sys
 sys.path.append('../database')
 import operators
 
+from datetime import datetime, date
+
 def init_db(db_configs):
     print('Initilizing the databse')
     operators.create_table(db_configs.conn, db_configs.sql_create_table_universities)
@@ -83,6 +85,12 @@ def info(supervisors, universities):
             num_bad_interviews, num_good_interviews, num_msc_positions, 
             num_phd_positions]
 
+def calc_difference_dates(date_email):
+    date1 = date.today()
+    # conver str to datetime
+    date2 = datetime.strptime(date_email, "%Y-%m-%d").date()
+    diff =  date1 - date2
+    return diff.days
 
 def apply_updates2db(db_configs):
     # add email_date to the database
