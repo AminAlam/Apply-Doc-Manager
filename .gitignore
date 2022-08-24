@@ -3,3 +3,4 @@ __pycache__
 *.db
 apply_doc_manager/
 *.csv
+.vscode
