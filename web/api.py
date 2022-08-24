@@ -52,6 +52,12 @@ class WebApp():
             university_name = university[0]
             cursor.execute('SELECT * FROM supervisors WHERE university = ?', (university_name,))
             supervisors = cursor.fetchall()
+            for supervisor_no, supervisor in enumerate(supervisors):
+                if supervisor[4] == 'Yes':
+                    diff = utils.calc_difference_dates(supervisor[12])
+                    supervisor = list(supervisor)
+                    supervisor[4] = '{0} Days ago'.format(diff)
+                    supervisors[supervisor_no] = tuple(supervisor)
             return flask.render_template('university.html', posts=supervisors)
 
         @app.route('/supervisors')
@@ -73,8 +79,8 @@ class WebApp():
         def supervisor(id):
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM supervisors where id = ?', (id,))
-            supervisor = cursor.fetchall()
-            return flask.render_template('supervisor.html', posts=supervisor)
+            supervisors = cursor.fetchall()
+            return flask.render_template('supervisor.html', posts=supervisors)
 
 
         @app.route('/insert_supervisor', methods=('GET', 'POST'))
