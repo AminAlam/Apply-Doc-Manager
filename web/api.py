@@ -85,7 +85,6 @@ class WebApp():
         def insert_supervisor_to_db():
             if flask.request.method == 'POST':
                 try:
-                    print(flask.request.form)
                     name = flask.request.form['name']
                     university = flask.request.form['university']
                     email = flask.request.form['email']
@@ -220,7 +219,7 @@ class WebApp():
             file_name = 'supervisors.csv'
             with open('web/'+file_name, 'w') as csvfile:
                 writer = csv.writer(csvfile)
-                writer.writerow(['Name', 'University', 'Email', 'Country', 'Emailed?', 'Answered?', 'Interviewed?', 'Position Type', 'Webpage', 'Univerity Rank', 'Notes', 'ID'])
+                writer.writerow(['Name', 'University', 'Email', 'Country', 'Emailed?', 'Answered?', 'Interviewed?', 'Position Type', 'Webpage', 'Univerity Rank', 'Notes', 'ID', 'Email Date'])
                 for supervisor in supervisors:
                     writer.writerow(supervisor)
             send_file(file_name)
@@ -235,7 +234,6 @@ class WebApp():
         @app.route('/<path:path>')
         def send_file(path):
             # flask send file to browser for download
-            print(app.root_path, path)
             return flask.send_from_directory(app.root_path, path, as_attachment=True)
 
 
