@@ -1,5 +1,6 @@
 import sys
 import requests
+import os
 sys.path.append('../database')
 import operators
 
@@ -104,11 +105,16 @@ def apply_updates2db(db_configs):
 
 def check_for_update():
     if check_for_internet_connection():
-        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/updates/README.md'
+        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/dev/updates/update.txt'
         readme_response = requests.get(readme_url)
-        readme_text = readme_response.text
-        if 'New update available!' in readme_text:
+        text_repo = readme_response.text                   
+        text_local = os.popen('cat updates/update.txt').read()
+
+        print(text_local)
+        if text_local not in text_repo:
             return True
+        else:
+            return False
     else:
         return False
 
