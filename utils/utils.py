@@ -1,4 +1,6 @@
 import sys
+import requests
+import os
 sys.path.append('../database')
 import operators
 
@@ -100,3 +102,26 @@ def apply_updates2db(db_configs):
     column_names = list(map(lambda x: x[0], cursor.description))
     if 'email_date' not in column_names:
         cursor.execute('ALTER TABLE supervisors ADD COLUMN email_date timestamp')
+
+def check_for_update():
+    if check_for_internet_connection():
+        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/dev/updates/update.txt'
+        readme_response = requests.get(readme_url)
+        text_repo = readme_response.text                   
+        text_local = os.popen('cat updates/update.txt').read()
+
+        print(text_local)
+        if text_local not in text_repo:
+            return True
+        else:
+            return False
+    else:
+        return False
+
+
+def check_for_internet_connection():
+    try:
+        requests.get('http://www.google.com')
+        return True
+    except requests.ConnectionError:
+        return False
