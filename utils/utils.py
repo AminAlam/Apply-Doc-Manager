@@ -1,4 +1,5 @@
 import sys
+import requests
 sys.path.append('../database')
 import operators
 
@@ -100,3 +101,10 @@ def apply_updates2db(db_configs):
     column_names = list(map(lambda x: x[0], cursor.description))
     if 'email_date' not in column_names:
         cursor.execute('ALTER TABLE supervisors ADD COLUMN email_date timestamp')
+
+def check_for_update():
+    readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/updates/README.md'
+    readme_response = requests.get(readme_url)
+    readme_text = readme_response.text
+    if 'New update available!' in readme_text:
+        return True

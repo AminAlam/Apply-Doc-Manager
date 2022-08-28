@@ -29,6 +29,10 @@ class WebApp():
             supervisors = cursor.fetchall()
 
             info = utils.info(supervisors, universities)
+            update_bool = utils.check_for_update()
+            if update_bool:
+                message = "There is an update available, pull it from the <a href='https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager' class='alert-link'>Github repo</a>!"
+                flask.flash(flask.Markup(message))
 
             return flask.render_template('index.html', post=info)
 
