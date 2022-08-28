@@ -33,7 +33,9 @@ class WebApp():
             if update_bool:
                 message = "There is an update available, pull it from the <a href='https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager' class='alert-link'>Github repo</a>!"
                 flask.flash(flask.Markup(message))
-
+            if not utils.check_for_internet_connection():
+                message = "There is no internet connection, note that some CSS files may not be loaded completely."
+                flask.flash(flask.Markup(message), 'error')
             return flask.render_template('index.html', post=info)
 
         @app.route('/universities')

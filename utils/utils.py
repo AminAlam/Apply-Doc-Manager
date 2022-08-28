@@ -103,8 +103,19 @@ def apply_updates2db(db_configs):
         cursor.execute('ALTER TABLE supervisors ADD COLUMN email_date timestamp')
 
 def check_for_update():
-    readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/updates/README.md'
-    readme_response = requests.get(readme_url)
-    readme_text = readme_response.text
-    if 'New update available!' in readme_text:
+    if check_for_internet_connection():
+        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/updates/README.md'
+        readme_response = requests.get(readme_url)
+        readme_text = readme_response.text
+        if 'New update available!' in readme_text:
+            return True
+    else:
+        return False
+
+
+def check_for_internet_connection():
+    try:
+        requests.get('http://www.google.com')
         return True
+    except requests.ConnectionError:
+        return False
