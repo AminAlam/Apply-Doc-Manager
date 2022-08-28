@@ -105,7 +105,7 @@ def apply_updates2db(db_configs):
 
 def check_for_update():
     if check_for_internet_connection():
-        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/dev/updates/update.txt'
+        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/main/updates/update.txt'
         readme_response = requests.get(readme_url)
         text_repo = readme_response.text                   
         text_local = os.popen('cat updates/update.txt').read()
