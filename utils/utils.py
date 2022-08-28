@@ -110,7 +110,6 @@ def check_for_update():
         text_repo = readme_response.text                   
         text_local = os.popen('cat updates/update.txt').read()
 
-        print(text_local)
         if text_local not in text_repo:
             return True
         else:
