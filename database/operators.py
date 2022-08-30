@@ -41,13 +41,18 @@ def insert_supervisor(conn, name, university, email, country, position_type, ema
 def edit_supervisor(conn, name, university, email, country, position_type, emailed, answer, interview, notes, id, email_date=None, rank=None, webpage=None):
     cursor = conn.cursor()
 
+    cursor = conn.cursor()
+    cursor.execute('select * from supervisors where id=?', (id,))
+    supervisor = cursor.fetchone()
+
     rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, email_date, id)]
     cursor.executemany('''update supervisors set name=?, university=?, email=?, country=?, emailed=?, answer=?, interview=?,
                           position_type=?, webpage=?, university_rank=?, notes=?, email_date=? where id=?''', rows)
     conn.commit()
     existence_bool_university = utils.check_existence_university_in_universities(conn, university)
     if not existence_bool_university:
-        insert_university(conn, university, country, rank=None)
+        insert_university(conn, university, country, rank=rank)
+        delete_university_with_no_supervisor(conn, university_name=supervisor[1])
     else:
         update_university(conn, university, country, rank=rank)
 
@@ -62,13 +67,11 @@ def delete_supervisor(conn, id):
     cursor = conn.cursor()
     cursor.execute('select * from supervisors where id=?', (id,))
     supervisor = cursor.fetchone()
-    cursor.execute('select * from supervisors where university=?', (supervisor[1],))
-    supervisors = cursor.fetchall()
-    cursor.execute('''delete from supervisors where id=?''', (id,))
-    print(len(supervisors))
-    if len(supervisors)==1:
-        cursor.execute('''delete from universities where name=?''', (supervisors[0][1],))
+
+    cursor.execute('delete from supervisors where id=?', (id,))
     conn.commit()
+
+    delete_university_with_no_supervisor(conn, university_name=supervisor[1])
 
 def insert_university(conn, name='sharif', country=None, rank=None):
     cursor = conn.cursor()
@@ -76,4 +79,11 @@ def insert_university(conn, name='sharif', country=None, rank=None):
     cursor.executemany('insert into universities values (?, ?, ?, ?)', rows)
     conn.commit()
 
+def delete_university_with_no_supervisor(conn, university_name):
+    cursor = conn.cursor()
+    cursor.execute('select * from supervisors where university=?', (university_name,))
+    supervisors = cursor.fetchall()
+    if len(supervisors)==0:
+        cursor.execute('delete from universities where name=?', (university_name,))
+        conn.commit()
 
