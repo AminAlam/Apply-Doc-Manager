@@ -43,7 +43,7 @@ def edit_supervisor(conn, name, university, email, country, position_type, email
 
     cursor = conn.cursor()
     cursor.execute('select * from supervisors where id=?', (id,))
-    supervisor = cursor.fetchone()
+    supervisor_old = cursor.fetchone()
 
     rows = [(name, university, email, country, emailed, answer, interview, position_type, webpage, rank, notes, email_date, id)]
     cursor.executemany('''update supervisors set name=?, university=?, email=?, country=?, emailed=?, answer=?, interview=?,
@@ -52,9 +52,9 @@ def edit_supervisor(conn, name, university, email, country, position_type, email
     existence_bool_university = utils.check_existence_university_in_universities(conn, university)
     if not existence_bool_university:
         insert_university(conn, university, country, rank=rank)
-        delete_university_with_no_supervisor(conn, university_name=supervisor[1])
     else:
         update_university(conn, university, country, rank=rank)
+    delete_university_with_no_supervisor(conn, university_name=supervisor_old[1])
 
 def update_university(conn, name, country, rank=None):
     cursor = conn.cursor()
@@ -63,11 +63,12 @@ def update_university(conn, name, country, rank=None):
     cursor.executemany('update supervisors set university_rank=? where university=?', [(rank, name)])
     conn.commit()
 
+
+
 def delete_supervisor(conn, id):
     cursor = conn.cursor()
     cursor.execute('select * from supervisors where id=?', (id,))
     supervisor = cursor.fetchone()
-
     cursor.execute('delete from supervisors where id=?', (id,))
     conn.commit()
 
@@ -83,6 +84,7 @@ def delete_university_with_no_supervisor(conn, university_name):
     cursor = conn.cursor()
     cursor.execute('select * from supervisors where university=?', (university_name,))
     supervisors = cursor.fetchall()
+    print('ffff', supervisors)
     if len(supervisors)==0:
         cursor.execute('delete from universities where name=?', (university_name,))
         conn.commit()

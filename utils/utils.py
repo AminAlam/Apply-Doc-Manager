@@ -105,11 +105,11 @@ def apply_updates2db(db_configs):
 
 def check_for_update():
     if check_for_internet_connection():
-        readme_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/main/updates/update.txt'
-        readme_response = requests.get(readme_url)
+        file_url = 'https://github.com/MohammadAminAlamalhoda/Apply-Doc-Manager/blob/main/apply_doc_manager.py'
+        readme_response = requests.get(file_url)
         text_repo = readme_response.text                   
-        text_local = os.popen('cat updates/update.txt').read()
-
+        text_local = os.popen('cat apply_doc_manager.py').read()
+        text_local = text_local.split('\n')[0]
         if text_local not in text_repo:
             return True
         else:
