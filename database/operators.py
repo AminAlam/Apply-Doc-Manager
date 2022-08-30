@@ -60,7 +60,14 @@ def update_university(conn, name, country, rank=None):
 
 def delete_supervisor(conn, id):
     cursor = conn.cursor()
+    cursor.execute('select * from supervisors where id=?', (id,))
+    supervisor = cursor.fetchone()
+    cursor.execute('select * from supervisors where university=?', (supervisor[1],))
+    supervisors = cursor.fetchall()
     cursor.execute('''delete from supervisors where id=?''', (id,))
+    print(len(supervisors))
+    if len(supervisors)==1:
+        cursor.execute('''delete from universities where name=?''', (supervisors[0][1],))
     conn.commit()
 
 def insert_university(conn, name='sharif', country=None, rank=None):
