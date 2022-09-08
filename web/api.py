@@ -71,23 +71,47 @@ class WebApp():
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM supervisors')
             supervisors = cursor.fetchall()
-            for supervisor_no, supervisor in enumerate(supervisors):
-                if supervisor[4] == 'Yes':
-                    diff = utils.calc_difference_dates(supervisor[12])
-                    supervisor = list(supervisor)
-                    supervisor[4] = '{0} Days ago'.format(diff)
-                    supervisors[supervisor_no] = tuple(supervisor)
+            supervisors = utils.email_date_check(supervisors)
             filters = ['All', 'All', 'All', 'All']
             return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
 
-        
+        @app.route('/supervisors_format', methods=['GET', 'POST'])
+        def supervisors_format():
+            if flask.request.method == 'POST':
+                emailed = flask.request.form['emailed']
+                answered = flask.request.form['answered']
+                interview = flask.request.form['interview']
+                position_type = flask.request.form['position_type']
+
+                sql_command = 'SELECT * FROM supervisors WHERE ' 
+                infos = []
+                if emailed != 'All':
+                    sql_command = sql_command + 'emailed=? AND '
+                    infos.append(emailed)
+                if answered != 'All':
+                    sql_command = sql_command + 'answer=? AND '
+                    infos.append(answered)
+                if interview != 'All':
+                    sql_command = sql_command + 'interview=? AND '
+                    infos.append(interview)
+                if position_type != 'All':
+                    sql_command = sql_command + 'position_type=? AND '
+                    infos.append(position_type)
+                sql_command = sql_command + '1'
+                cursor = self.db_configs.conn.cursor()
+                infos = tuple(infos)
+                cursor.execute(sql_command, infos)
+                supervisors = cursor.fetchall()
+                supervisors = utils.email_date_check(supervisors)
+                filters = [emailed, answered, interview, position_type]
+                return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
+
         @app.route('/<int:id>/supervisor')
         def supervisor(id):
             cursor = self.db_configs.conn.cursor()
             cursor.execute('SELECT * FROM supervisors where id = ?', (id,))
             supervisors = cursor.fetchall()
             return flask.render_template('supervisor.html', posts=supervisors)
-
 
         @app.route('/insert_supervisor', methods=('GET', 'POST'))
         def insert_supervisor():
@@ -167,37 +191,6 @@ class WebApp():
             message = 'Supervisor is deleted successfully'
             flask.flash(message)
             return flask.redirect(flask.url_for('supervisors'))
-
-        @app.route('/supervisors_format', methods=['GET', 'POST'])
-        def supervisors_format():
-            if flask.request.method == 'POST':
-                emailed = flask.request.form['emailed']
-                answered = flask.request.form['answered']
-                interview = flask.request.form['interview']
-                position_type = flask.request.form['position_type']
-
-                sql_command = 'SELECT * FROM supervisors WHERE ' 
-                infos = []
-                if emailed != 'All':
-                    sql_command = sql_command + 'emailed=? AND '
-                    infos.append(emailed)
-                if answered != 'All':
-                    sql_command = sql_command + 'answer=? AND '
-                    infos.append(answered)
-                if interview != 'All':
-                    sql_command = sql_command + 'interview=? AND '
-                    infos.append(interview)
-                if position_type != 'All':
-                    sql_command = sql_command + 'position_type=? AND '
-                    infos.append(position_type)
-                sql_command = sql_command + '1'
-                cursor = self.db_configs.conn.cursor()
-                infos = tuple(infos)
-                cursor.execute(sql_command, infos)
-                supervisors = cursor.fetchall()
-
-                filters = [emailed, answered, interview, position_type]
-                return flask.render_template('supervisors.html', posts=supervisors, filters=filters)
 
         @app.route('/universities_format', methods=['GET', 'POST'])
         def universities_format():
