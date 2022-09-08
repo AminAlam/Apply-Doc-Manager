@@ -1,4 +1,4 @@
-# **V1.3.1**
+# **V1.3.2**
 import sys
 sys.path.append('./database')
 sys.path.append('./utils')
