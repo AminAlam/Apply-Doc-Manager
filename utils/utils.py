@@ -117,10 +117,26 @@ def check_for_update():
     else:
         return False
 
-
 def check_for_internet_connection():
     try:
         requests.get('http://www.google.com')
         return True
     except requests.ConnectionError:
         return False
+
+def email_date_check(supervisors):
+    for supervisor_no, supervisor in enumerate(supervisors):
+        if supervisor[4] == 'Yes':
+            diff = calc_difference_dates(supervisor[12])
+            supervisor = list(supervisor)
+            if diff == 0:
+                passed_days = 'Today'
+            elif diff == 1:
+                passed_days = 'Yesterday'
+            elif diff < 0:
+                passed_days = 'In the future!!'
+            else:
+                passed_days = f'{diff} days ago'
+            supervisor[4] = passed_days
+            supervisors[supervisor_no] = tuple(supervisor)
+    return supervisors
