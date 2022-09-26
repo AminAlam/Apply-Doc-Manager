@@ -1,4 +1,4 @@
-# **V1.3.2**
+# **V1.3.3**
 import sys
 sys.path.append('./database')
 sys.path.append('./utils')
@@ -32,3 +32,4 @@ def setup_all(server_ip, port, static_folder):
 if __name__ == '__main__':
     setup_all()
 
+    
