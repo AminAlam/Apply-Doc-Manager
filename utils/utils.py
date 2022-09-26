@@ -86,11 +86,14 @@ def info(supervisors, universities):
             num_phd_positions]
 
 def calc_difference_dates(date_email):
-    date1 = date.today()
-    # conver str to datetime
-    date2 = datetime.strptime(date_email, "%Y-%m-%d").date()
-    diff =  date1 - date2
-    return diff.days
+    if date_email != '':
+        date1 = date.today()
+        # conver str to datetime
+        date2 = datetime.strptime(date_email, "%Y-%m-%d").date()
+        diff =  date1 - date2
+        return diff.days
+    else:
+        return 'Date is not indicated'
 
 def apply_updates2db(db_configs):
     # add email_date to the database
@@ -127,14 +130,17 @@ def email_date_check(supervisors):
         if supervisor[4] == 'Yes':
             diff = calc_difference_dates(supervisor[12])
             supervisor = list(supervisor)
-            if diff == 0:
-                passed_days = 'Today'
-            elif diff == 1:
-                passed_days = 'Yesterday'
-            elif diff < 0:
-                passed_days = 'In the future!!'
+            if type(diff) == int:
+                if diff == 0:
+                    passed_days = 'Today'
+                elif diff == 1:
+                    passed_days = 'Yesterday'
+                elif diff < 0:
+                    passed_days = 'In the future!!'
+                else:
+                    passed_days = f'{diff} days ago'
             else:
-                passed_days = f'{diff} days ago'
+                passed_days = diff
             supervisor[4] = passed_days
             supervisors[supervisor_no] = tuple(supervisor)
     return supervisors
